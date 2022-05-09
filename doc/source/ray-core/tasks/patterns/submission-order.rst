@@ -29,14 +29,14 @@ Code example
         time.sleep(random.random())
 
     # Antipattern: process results in the order they were spawned.
-    refs = [f.remote(i) for i in range(100)]
+    refs = [f.remote() for _ in range(100)]
     for ref in refs:
         # Blocks until this ObjectRef is ready.
         result = ray.get(ref)
         # process result
 
     # Better approach: process results in the order that they finish.
-    refs = [f.remote(i) for i in range(100)]
+    refs = [f.remote() for _ in range(100)]
     unfinished = refs
     while unfinished:
         # Returns the first ObjectRef that is ready.
